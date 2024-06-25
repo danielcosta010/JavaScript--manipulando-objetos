@@ -1,11 +1,22 @@
 let listaDeItens = [];
 let itemAEditar;
 
-
 const form = document.getElementById('form-itens');
 const itensInput = document.getElementById('receber-item');
 const itemListaEscolhidos = document.getElementById('lista-de-itens');
 const itemListaComprados = document.getElementById('itens-comprados');
+const listaRecuperada = localStorage.getItem('listaDeItens');
+
+function atualizaLocalStorage() {
+  localStorage.setItem('listaDeItens', JSON.stringify(listaDeItens));
+}
+// (false, NaN, 0, null, undefined, "", valores omitidos) retornam false;
+if (listaRecuperada) {
+  listaDeItens = JSON.parse(listaRecuperada);
+  mostrarItem()
+} else {
+  listaDeItens = [];
+}
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -92,6 +103,8 @@ function mostrarItem() {
       mostrarItem()
     })
   })
+
+  atualizaLocalStorage()
 }
 
 function salvarEdicao() {
